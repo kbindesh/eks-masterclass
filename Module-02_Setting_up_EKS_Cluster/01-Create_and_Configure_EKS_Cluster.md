@@ -1,4 +1,4 @@
-# Seting up Elastic Kubernetes Service (EKS) Cluster
+# Setting up Elastic Kubernetes Service (EKS) Cluster
 
 In this section, we will learn how to setup an Amazon EKS cluster, a Production-grade Kubernetes distribution.
 
