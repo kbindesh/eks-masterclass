@@ -128,10 +128,18 @@ kubectl get pods
 ### Step-02: Expose Pod as a Service
 
 ```
-kubectl expose pod my-first-pod  --type=NodePort --port=80 --name=my-first-service
+kubectl expose bindesh-nginx-pod --type=NodePort --port=80 --name=webapp-np-service
 ```
 
 ### Step-03: Get Service Info
+
+```
+# Get list of all the services | keep "webapp-np-service" service port handy
+kubectl get service
+
+# Service alias
+kubectl get svc
+```
 
 ### Step-04: Accessing the application (Pod)
 
@@ -140,6 +148,6 @@ kubectl expose pod my-first-pod  --type=NodePort --port=80 --name=my-first-servi
 kubectl get nodes -o wide
 
 # Accessing the application
-http://<node1_public_ip>:<node_port>
+http://<node1_public_ip>:<node_port_from_step_03>
 
 ```
