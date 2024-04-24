@@ -131,10 +131,10 @@ kubectl get pods
 kubectl expose bindesh-nginx-pod --type=NodePort --port=80 --name=webapp-np-service
 ```
 
-### Step-03: Get Service Info
+### Step-03: Get Service details
 
 ```
-# Get list of all the services | keep "webapp-np-service" service port handy
+# Get list of all the services | keep "webapp-np-service" service port no. handy
 kubectl get service
 
 # Service alias

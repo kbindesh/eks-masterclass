@@ -1,0 +1,62 @@
+# Listing all pods in a K8s Deployment
+
+- Listing all the pods belonging to a deployment can be done by querying its selectors, but using the deployment's synthesized replicaset identifier allows for easier automation.
+
+## Option-01
+
+```
+# deployment name and namespace
+deployment_name=mydeployment
+deployment_ns=mynamespace
+
+# get replica set identifier for deployment
+dep_rs=$(kubectl describe deployment $deployment_name -n $deployment_ns | grep ^NewReplicaSet | awk '{print $2}')
+
+# get pod hash for replicaset
+pod_hash=$(kubectl get replicaset $dep_rs -n $deployment_ns -o jsonpath="{.metadata.labels.pod-template-hash}")
+
+# show all pods belonging to deployment
+kubectl get pods -l pod-template-hash=$pod_hash -n $deployment_ns
+```
+
+## Option-02: Pulling all pods from Deployment using ownerReferences
+
+- The solution above has the advantage of not requiring any 3rd party utilities, but if we use the ‘jq‘ utility it provides enhanced filtering expressions that give us a more general solution based on pulling pods via their `ownerReferences`.
+
+```
+# deployment name and namespace
+deployment_name=mydeployment
+deployment_ns=mynamespace
+
+# get sythesized replica set identifier for deployment
+dep_rs=$(kubectl get replicaset -n $deployment_ns -o=json | jq -r ".items[].metadata | select(.ownerReferences[0].name==\"$deployment_name\" and .ownerReferences[0].kind==\"Deployment\") | .name")
+
+# show all pods controlled by Deployment (via synthesized ReplicaSet)
+kubectl get pods -n $deployment_ns -o=json | jq -r ".items[].metadata | select(.ownerReferences[0].name==\"$dep_rs\" and .ownerReferences[0].kind==\"ReplicaSet\") | .name"
+```
+
+## Pulling all pods from ReplicaSet using ownerReferences
+
+- Using the same ‘ownerReferences’ field as the example above, we can pull all the pods controlled by a standard ReplicaSet.
+
+```
+# deployment name and namespace
+replicaset_name=myreplicaset
+replicaset_ns=mynamespace
+
+# show all pods controlled by ReplicaSet
+kubectl get pods -n $replicaset_ns -o=json | jq -r ".items[].metadata | select(.ownerReferences[0].name==\"$replicaset_name\" and .ownerReferences[0].kind==\"ReplicaSet\") | .name"
+```
+
+## Pulling all pods from DaemonSet using ownerReferences
+
+- Using the same `ownerReferences` field as the example above, we can pull all the pods controlled by a DaemonSet.
+
+```
+# deployment name and namespace
+damonset_name=mydaemonset
+daemonset_ns=mynamespace
+
+# show all pods controlled by DaemonSet
+kubectl get pods -n $daemonset_ns -o=json | jq -r ".items[].metadata | select(.ownerReferences[0].name==\"$daemonset_name\" and .ownerReferences[0].kind==\"DaemonSet\") | .name"
+```

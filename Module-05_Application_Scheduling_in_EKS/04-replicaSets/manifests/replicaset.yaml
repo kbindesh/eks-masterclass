@@ -6,7 +6,6 @@ metadata:
     app: guestbook
     tier: frontend
 spec:
-  # modify replicas according to your case
   replicas: 3
   selector:
     matchLabels:
@@ -17,5 +16,7 @@ spec:
         tier: frontend
     spec:
       containers:
-        - name: php-redis
-          image: us-docker.pkg.dev/google-samples/containers/gke/gb-frontend:v5
+        - name: nginx-container
+          image: nginx:latest
+          ports:
+            - containerPort: 80
