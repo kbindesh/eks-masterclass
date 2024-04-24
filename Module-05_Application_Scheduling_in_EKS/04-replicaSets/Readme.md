@@ -10,17 +10,17 @@ kind: ReplicaSet
 metadata:
   name: <name_of_replicaset>
   labels:
-	  key: value
+    key: value
 spec:
   replicas: <no_of_replicas>
   selector:
-	  matchLabels:
-  	  key: value
+    matchLabels:
+      key: value
   template:
-	  metadata:
-  	  labels:
-    	  key:value
-	spec:
+    metadata:
+      labels:
+        key:value
+  spec:
     containers:
       - name: <container_name>
         image: <container_img>:<tag>
