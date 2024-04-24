@@ -2,11 +2,6 @@
 
 ## 01. Create, List and Describe `Deployments`
 
-# Scale Up the Deployment
-
-kubectl scale --replicas=20 deployment/<Deployment-Name>
-kubectl scale --replicas=20 deployment/my-first-deployment
-
 ### Step-00: Deployment manifest Syntax
 
 ```
