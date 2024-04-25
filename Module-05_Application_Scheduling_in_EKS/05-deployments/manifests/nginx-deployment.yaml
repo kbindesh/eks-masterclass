@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+  labels:
+    app: nginx
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+  spec:
+    containers:
+      - name: nginx
+        image: nginx:latest
+        ports:
+          - containerPort: 80
+# The following attributes are important to help you understand the preceding YAML definition
+# spec.replicas gives us the number of replica pods
+# spec.template is the template pod descriptor that defines the pods that will be created
+# spec.selector is the deployment that will manage all pods whose labels match this selector

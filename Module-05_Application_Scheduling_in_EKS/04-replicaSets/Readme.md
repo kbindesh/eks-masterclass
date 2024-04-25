@@ -1,5 +1,9 @@
 # Kubernetes ReplicaSets
 
+- **ReplicaSets** help pods achieve higher availability since users can define a certain number of replicas using a ReplicaSet.
+- The main capability of a **ReplicaSet** is to make sure the cluster keeps the exact number of replicas running in the Kubernetes cluster.
+- If any of them were to fail, new ones will be deployed.
+
 ## 01. Working with ReplicaSets
 
 ### Step-1.0: Syntax - replicaSet manifest
@@ -25,6 +29,8 @@ spec:
       - name: <container_name>
         image: <container_img>:<tag>
 ```
+
+- The **matchLabels selector** simply matches the labels specified under it to the _labels on the pods_.
 
 ### Step-1.1: Create a ReplicaSet
 
