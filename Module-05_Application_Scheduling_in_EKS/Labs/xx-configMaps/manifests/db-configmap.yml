@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: db-configmap
+data:
+  username: "DB_ADMIN"
+  HomeDir: "/usr/dir"

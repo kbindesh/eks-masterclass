@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: eks-helloworld
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: eks-helloworld
+  template:
+    metadata:
+      labels:
+        app: eks-helloworld
+    spec:
+      containers:
+        - name: eks-helloworld
+          image: nginx:latest
+          ports:
+            - containerPort: 80
+          env:
+            - name: TITLE
+              value: "EKS is Awesome..."

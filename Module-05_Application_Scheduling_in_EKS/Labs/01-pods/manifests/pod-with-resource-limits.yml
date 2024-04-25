@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-with-res-limit
+spec:
+  containers:
+    - name: bin-container
+      image: busybox
+      command: ["sh", "-c", "echo stay tuned! && sleep 3600"]
+      resources:
+        requests:
+          memory: "64Mi" # 64 Megabytes
+          cpu: "250m" # 250 millicpu or millicores
+        limits:
+          memory: "128Mi"
+          cpu: "500m"
