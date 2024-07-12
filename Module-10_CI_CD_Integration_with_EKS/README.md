@@ -17,7 +17,7 @@
 
 Kindly refer this link for step-by-step process for setting-up Amazon EKS cluster: </br></br>
 https://github.com/kbindesh/eks-masterclass/blob/main/Module-02_Setting_up_EKS_Cluster/01-Create_and_Configure_EKS_Cluster.md
-</br>[Press ctrl + click to open the link in a new tab]
+</br></br>[Press ctrl + click to open the link in a new tab]
 
 ## Step-04: Create an Amazon ECR Repository
 
