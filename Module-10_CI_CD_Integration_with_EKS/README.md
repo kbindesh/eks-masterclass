@@ -1,4 +1,4 @@
-# Automate Application Deployment on EKS Cluster with AWS DevOps services
+# CI/CD Pipeline for Amazon EKS Cluster using AWS DevOps services
 
 ## Step-01: Introduction to DevOps
 
