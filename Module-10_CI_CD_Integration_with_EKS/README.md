@@ -17,7 +17,7 @@
 
 Kindly refer this link for step-by-step process for setting-up Amazon EKS cluster: </br></br>
 https://github.com/kbindesh/eks-masterclass/blob/main/Module-02_Setting_up_EKS_Cluster/01-Create_and_Configure_EKS_Cluster.md
-[Press ctrl + click to open the link in a new tab]
+</br>[Press ctrl + click to open the link in a new tab]
 
 ## Step-04: Create an Amazon ECR Repository
 
@@ -36,9 +36,9 @@ https://github.com/kbindesh/eks-masterclass/blob/main/Module-02_Setting_up_EKS_C
 
 - Verify the pushed code on from AWS Management console.
 
-## Step-04: Create CodeCommit Repository and check-in the code
+## Step-05: Create CodeCommit Repository and check-in the code
 
-### Step-4.1: Create an AWS CodeCommit Repository
+### Step-5.1: Create an AWS CodeCommit Repository
 
 - Navigate to **Services** >> **Developer Tools** >> **CodeCommit**
 - From the left-side panel, under **Source** section >> Select **Repositories**.
@@ -47,7 +47,7 @@ https://github.com/kbindesh/eks-masterclass/blob/main/Module-02_Setting_up_EKS_C
 - **Description**: This repos has bindesh's demo k8s app components.
 - Leave rest of the setting to defaults >> **Create**.
 
-### Step-4.2: Create an IAM user for CodeCommit Authentication
+### Step-5.2: Create an IAM user for CodeCommit Authentication
 
 - Navigate to **IAM** service >> **Users** >> Click on **Create user**
 - **User name**: codecommituser
@@ -56,7 +56,7 @@ https://github.com/kbindesh/eks-masterclass/blob/main/Module-02_Setting_up_EKS_C
 - **Permissions policies**: AdministratorAccess
 - Review the entered details and click **Create** button.
 
-### Step-4.3: Develop the application and manifests
+### Step-5.3: Develop the application and manifests
 
 - Launch the Visual Studio Code (or any other IDE) and open the
 - Clone the CodeCommit repository on your local system by running following command:
@@ -81,7 +81,7 @@ https://github.com/kbindesh/eks-masterclass/blob/main/Module-02_Setting_up_EKS_C
 
 - You may clone this github repo to get all the above listed files.
 
-### Step-4.4: Commit the changes locally
+### Step-5.4: Commit the changes locally
 
 - Commit the changes in your local system by running following commands:
 
@@ -96,7 +96,7 @@ https://github.com/kbindesh/eks-masterclass/blob/main/Module-02_Setting_up_EKS_C
   git commit -m "App Version 1.0"
   ```
 
-### Step-4.5: Push the changes to remote repository (GitHub)
+### Step-5.5: Push the changes to remote repository (GitHub)
 
 - Push the code to remote CodeCommit repository:
 
@@ -111,13 +111,13 @@ https://github.com/kbindesh/eks-masterclass/blob/main/Module-02_Setting_up_EKS_C
   git remote -v
   ```
 
-## Step-05: Create STS Assume IAM Role for CodeBuild to interact with AWS EKS
+## Step-06: Create STS Assume IAM Role for CodeBuild to interact with AWS EKS
 
 - In this lab, we will use AWS CodeBuild to deploy changes to our Kubernetes cluster (EKS).
 - This requires an AWS IAM role capable of interacting with the EKS cluster.
 - Here, we will create an IAM role and add an inline policy **EKS:Describe** that we will use in the CodeBuild stage to interact with the EKS cluster via kubectl.
 
-### Step-5.1: Connect to your AWS Account using AWS CLI
+### Step-6.1: Connect to your AWS Account using AWS CLI
 
 - Pre-requisite: AWS CLI
 - Launch Command Prompt/PowerShell/Terminal on your system >> Run following command to connect to your AWS Account:
@@ -133,7 +133,7 @@ https://github.com/kbindesh/eks-masterclass/blob/main/Module-02_Setting_up_EKS_C
   Default output format: json
   ```
 
-### Step-5.2: Create required IAM components (IAM Role, Policies)
+### Step-6.2: Create required IAM components (IAM Role, Policies)
 
 ```
 # Export your Account ID
@@ -157,7 +157,7 @@ aws iam put-role-policy --role-name EksCodeBuildKubectlRole --policy-name eks-de
 
 - Verify the above create role and policy from AWS Management Console >> IAM
 
-## Step-06: Update EKS Cluster aws-auth ConfigMap with a custom IAM Role
+## Step-07: Update EKS Cluster aws-auth ConfigMap with a custom IAM Role
 
 - In this step, we will assign an IAM role to the `aws-auth ConfigMap` for the EKS cluster.
 - Amazon EKS `aws-auth` configMap will allow `kubectl` in the CodeBuild stage of the pipeline to interact with the EKS cluster via IAM role that we created on **Step-5.2**.
@@ -182,11 +182,11 @@ aws iam put-role-policy --role-name EksCodeBuildKubectlRole --policy-name eks-de
   kubectl get configmap aws-auth -o yaml -n kube-system
   ```
 
-## Step-07: Configure the Build process
+## Step-08: Configure the Build process
 
-### Step-7.1: Review the `buildspec.yml` file
+### Step-8.1: Review the `buildspec.yml` file
 
-### Step-7.2: Create a new CodeBuild Project-
+### Step-8.2: Create a new CodeBuild Project-
 
 - Sign-in to **AWS Management console** >> **Services** >> **Developer Tools** >> **CodeBuild**.
 - From the left-side panel, select **Build Projects** >> click **Create Project** button.
@@ -207,11 +207,11 @@ aws iam put-role-policy --role-name EksCodeBuildKubectlRole --policy-name eks-de
     - **EKS_KUBECTL_ROLE_ARN** = arn:aws:iam::154511248558:role/EksCodeBuildKubectlRole
     - **EKS_CLUSTER_NAME** = <eks_cluster_name>
 
-### Step-7.3: Trigger the build manually (to test)
+### Step-8.3: Trigger the build manually (to test)
 
-## Step-08: Create and Configure AWS CodePipeline
+## Step-09: Create and Configure AWS CodePipeline
 
-### Step-8.1: Create a new AWS CodePipeline
+### Step-9.1: Create a new AWS CodePipeline
 
 - Navigate to **AWS Management Console** >> **Services** >> **CodePipeline** -> **Create Pipeline**
 
@@ -241,13 +241,13 @@ aws iam put-role-policy --role-name EksCodeBuildKubectlRole --policy-name eks-de
 - **Review**
   - Review and click on **Create Pipeline**
 
-## Step-09: Updae CodeBuild IAM Role to have ECR full access
+## Step-10: Updae CodeBuild IAM Role to have ECR full access
 
 - Update the CodeBuild Role to have access to ECR to upload images built by codeBuild.
   - **Role Name**: codebuild-eks-devops-cb-for-pipe-service-role
   - **Policy Name**: AmazonEC2ContainerRegistryFullAccess
 
-## Step-10: Trigger the AWS CodePipeline
+## Step-11: Trigger the AWS CodePipeline
 
 - Switch to your local system >> Project repo.
 - Make some changes to any file >> Stage & Commit the changes >> Push the change to CodeCommit repo.
@@ -259,18 +259,18 @@ aws iam put-role-policy --role-name EksCodeBuildKubectlRole --policy-name eks-de
   git push -u origin master
   ```
 
-## Step-11: Verify the Docker image upload in Amazon ECR
+## Step-12: Verify the Docker image upload in Amazon ECR
 
 - Verify CodeBuild Logs
 - A new image should be uploaded to ECR, verify the ECR with new docker image tag date time.
 - Build will fail again at post build stage at STS Assume role section. Let's fix that in next step.
 
-## Step-12: Update CodeBuild Role to have access to STS Assume Role (created in step#5.2)
+## Step-13: Update CodeBuild Role to have access to STS Assume Role (created in step#6.2)
 
 - Build will fail due to CodeBuild's insufficient access permissions to EKS cluster. In other words, CodeBuild do not have access to perform updates in EKS Cluster.
 - Create STS Assume Policy and assign to CodeBuild role `codebuild-eks-devops-cb-for-pipe-service-role`
 
-### Step-12.1: Create STS Assume Role Policy
+### Step-13.1: Create STS Assume Role Policy
 
 - Go to Services IAM -> Policies -> Create Policy
 - In **Visual Editor Tab**
@@ -279,7 +279,7 @@ aws iam put-role-policy --role-name EksCodeBuildKubectlRole --policy-name eks-de
 - **Resources**: Specific
 
   - Add ARN
-  - **Specify ARN for Role**: arn:aws:iam::154511248558:role/EksCodeBuildKubectlRole [Refer Step#5.2]
+  - **Specify ARN for Role**: arn:aws:iam::154511248558:role/EksCodeBuildKubectlRole [Refer Step#6.2]
   - Click **Add**
 
 - Click on **Review Policy**
@@ -287,12 +287,12 @@ aws iam put-role-policy --role-name EksCodeBuildKubectlRole --policy-name eks-de
 - **Description**: CodeBuild to interact with EKS cluster to perform changes
 - Click on **Create Policy**
 
-### Step-12.2: Associate Policy to CodeBuild Role
+### Step-13.2: Associate Policy to CodeBuild Role
 
 - **Role Name**: codebuild-eks-devops-cb-for-pipe-service-role
 - **Policy to be associated**: `eks-codebuild-sts-assume-role`
 
-## Step-13: Trigger the AWS CodePipeline
+## Step-14: Trigger the AWS CodePipeline
 
 - Make changes to index.html (Update as V3)
 - Commit the changes to local git repository and push to codeCommit Repository
@@ -307,7 +307,7 @@ git push
 
 - Verify CodeBuild Logs
 
-## Step-12: Clean up the resources
+## Step-15: Clean up the resources
 
 - Delete All kubernetes Objects in EKS Cluster
 
